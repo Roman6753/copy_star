@@ -4,18 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .notification {
-            transition: all 0.3s ease;
-        }
-        input:invalid {
-            border-color: #f87171;
-        }
-        input:valid {
-            border-color: #10b981;
-        }
-    </style>
+    <script src="{{asset('public/tailwindcss.js')}}"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
     <nav class="bg-white shadow-lg sticky top-0 z-40">
