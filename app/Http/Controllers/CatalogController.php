@@ -13,14 +13,12 @@ class CatalogController extends Controller
     {
         $query = Product::where('stock', '>', 0);
 
-        // Фильтрация по категориям
         if ($request->has('category') && $request->category !== 'all') {
             $query->whereHas('category', function($q) use ($request) {
                 $q->where('slug', $request->category);
             });
         }
 
-        // Сортировка
         $sort = $request->get('sort', 'newest');
         switch ($sort) {
             case 'year':

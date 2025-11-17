@@ -21,10 +21,6 @@ use MoonShine\Laravel\Pages\LoginPage;
 use MoonShine\Laravel\Pages\ProfilePage;
 
 return [
-    'title' => env('MOONSHINE_TITLE', 'MoonShine'),
-    'logo' => '/vendor/moonshine/logo-small.svg',
-    'logo_small' => '/vendor/moonshine/logo-small.svg',
-
 
     // Default flags
     'use_migrations' => true,
@@ -35,7 +31,7 @@ return [
 
     // Routing
     'domain' => env('MOONSHINE_DOMAIN'),
-    'prefix' => env('MOONSHINE_ROUTE_PREFIX', 'admin'),
+    'prefix' => env('MOONSHINE_ROUTE_PREFIX', 'moonshine'),
     'page_prefix' => env('MOONSHINE_PAGE_PREFIX', 'page'),
     'resource_prefix' => env('MOONSHINE_RESOURCE_PREFIX', 'resource'),
     'home_route' => 'moonshine.index',

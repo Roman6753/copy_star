@@ -112,4 +112,28 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
+    
+    'moonshine' => [
+        'driver' => 'session',
+        'provider' => 'moonshine',
+    ],
+],
+
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class,
+    ],
+    
+    'moonshine' => [
+        'driver' => 'eloquent',
+        'model' => MoonShine\Laravel\Models\MoonshineUser::class,
+    ],
+],
+
 ];

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use MoonShine\Laravel\Models\MoonshineUser;
 
 class AuthController extends Controller
 {
@@ -74,4 +75,23 @@ class AuthController extends Controller
         Auth::logout();
         return to_route('about');
     }
+
+    public function autoLogin()
+{
+    if (!Auth::check() || !Auth::user()->is_admin) {
+        dd('Не авторизован или не админ');
+    }
+
+    $moonshineUser = MoonshineUser::where('email', Auth::user()->email)->first();
+    
+    if (!$moonshineUser) {
+        dd('MoonShine пользователь не найден. Email: ' . Auth::user()->email);
+    }
+
+    auth('moonshine')->login($moonshineUser);
+    
+    dd('Успешная авторизация', auth('moonshine')->check());
+    
+    return redirect('/moonshine');
+}
 }

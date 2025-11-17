@@ -5,20 +5,34 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MoonShineAuthController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', [PageController::class, 'about'])->name('about');
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog');
 Route::get('/product/{product}', [CatalogController::class, 'show'])->name('product.show');
 Route::get('/contacts', [PageController::class, 'contacts'])->name('contacts');
 
-
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+
+Route::get('/moonshine-direct', function () {
+    $moonshineUser = \MoonShine\Laravel\Models\MoonshineUser::where('email', 'admin@copystar.ru')->first();
+    
+    if ($moonshineUser) {
+        auth('moonshine')->login($moonshineUser);
+        return redirect('/moonshine');
+    }
+    
+    abort(403, 'Пользователь MoonShine не найден');
+})->name('moonshine.direct')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

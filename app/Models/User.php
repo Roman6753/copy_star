@@ -17,6 +17,7 @@ class User extends Authenticatable
         'login',
         'email',
         'password',
+        'is_admin',
     ];
 
     protected $hidden = [
@@ -27,6 +28,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'is_admin' => 'boolean',
         ];
     }
 
