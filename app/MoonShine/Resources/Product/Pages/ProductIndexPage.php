@@ -13,14 +13,11 @@ use MoonShine\UI\Components\Metrics\Wrapped\Metric;
 use MoonShine\UI\Fields\ID;
 use App\MoonShine\Resources\Product\ProductResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Support\ListOf;
-use MoonShine\UI\Components\Layout\Column;
-use MoonShine\UI\Components\Layout\Grid;
 use MoonShine\UI\Fields\Image;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Text;
-use MoonShine\UI\Fields\Textarea;
-use PhpParser\Node\Stmt\Block;
 use Throwable;
 
 
@@ -39,11 +36,15 @@ class ProductIndexPage extends IndexPage
         return [
             ID::make()->sortable(),
             
-            Image::make('Изображение', 'image')
-                ->disk('public')
-                ->dir('products'),
+            Image::make('Изображение', 'image'),
 
             Text::make('Название', 'name')
+                ->sortable(),
+
+            Slug::make('Slug', 'slug')
+                ->from('name')
+                ->unique()
+                ->required()
                 ->sortable(),
 
             BelongsTo::make('Категория', 'category', 'name')

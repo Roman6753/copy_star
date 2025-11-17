@@ -12,6 +12,7 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\Product\ProductResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Components\Layout\Box;
@@ -57,6 +58,13 @@ class ProductFormPage extends FormPage
                 ])->columnSpan(6),
 
                 Column::make([
+
+                    Slug::make('Slug', 'slug')
+                    ->from('name')
+                    ->unique()
+                    ->required()
+                    ->sortable(),
+
                     Text::make('Страна', 'country')
                         ->required(),
 
@@ -69,8 +77,6 @@ class ProductFormPage extends FormPage
                         ->required(),
 
                     Image::make('Изображение', 'image')
-                        ->dir('products')
-                        ->disk('public')
                         ->allowedExtensions(['jpg', 'png', 'jpeg', 'gif']),
                 ])->columnSpan(6),
             ]),
@@ -91,6 +97,7 @@ class ProductFormPage extends FormPage
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'unique:products,slug,' . $item->id],
             'description' => ['required', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
             'price' => ['required', 'numeric', 'min:0'],
