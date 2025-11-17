@@ -53,7 +53,11 @@ class CategoryIndexPage extends IndexPage
      */
     protected function filters(): iterable
     {
-        return [];
+        return [
+            Text::make('Название', 'name')
+                ->required()
+                ->sortable(),
+        ];
     }
 
     /**

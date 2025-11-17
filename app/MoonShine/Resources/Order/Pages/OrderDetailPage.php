@@ -9,8 +9,11 @@ use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use App\MoonShine\Resources\Order\OrderResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Select;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -25,7 +28,24 @@ class OrderDetailPage extends DetailPage
     protected function fields(): iterable
     {
         return [
-            ID::make(),
+            ID::make()->sortable(),
+            
+            BelongsTo::make('Пользователь', 'user', function($user) {
+                return $user->full_name . ' (' . $user->email . ')';
+            })
+            ->sortable()
+            ->searchable(),
+
+            Text::make('Общая сумма', 'total')
+                ->sortable(),
+
+            Select::make('Статус', 'status')
+                ->options([
+                    'new' => 'Новый',
+                    'confirmed' => 'Подтвержден',
+                    'cancelled' => 'Отменен',
+                ])
+                ->sortable(),
         ];
     }
 

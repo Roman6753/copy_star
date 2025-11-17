@@ -43,8 +43,7 @@ class OrderFormPage extends FormPage
                     ->readonly()
                     ->searchable(),
 
-                    Text::make('Общая сумма', 'total')
-                        ->readonly(),
+                    Text::make('Общая сумма', 'total'),
                 ])->columnSpan(6),
 
                 Column::make([

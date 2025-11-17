@@ -9,8 +9,10 @@ use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use App\MoonShine\Resources\Category\CategoryResource;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -25,7 +27,15 @@ class CategoryDetailPage extends DetailPage
     protected function fields(): iterable
     {
         return [
-            ID::make(),
+            ID::make()->sortable(),
+                Text::make('Название', 'name')
+                    ->required()
+                    ->sortable(),
+                Slug::make('Slug', 'slug')
+                    ->from('name')
+                    ->unique()
+                    ->required()
+                    ->sortable(),
         ];
     }
 

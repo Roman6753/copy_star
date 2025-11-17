@@ -10,7 +10,9 @@ use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use App\MoonShine\Resources\User\UserResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Email;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -25,7 +27,22 @@ class UserDetailPage extends DetailPage
     protected function fields(): iterable
     {
         return [
-            ID::make(),
+            ID::make()->sortable(),
+            
+            Text::make('Имя', 'name')
+                ->sortable(),
+
+            Text::make('Фамилия', 'surname')
+                ->sortable(),
+
+            Text::make('Отчество', 'patronymic')
+                ->sortable(),
+
+            Text::make('Логин', 'login')
+                ->sortable(),
+
+            Email::make('Email', 'email')
+                ->sortable(),
         ];
     }
 

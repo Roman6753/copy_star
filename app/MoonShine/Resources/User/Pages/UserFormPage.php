@@ -12,11 +12,15 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\User\UserResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Components\Collapse;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Column;
 use MoonShine\UI\Components\Layout\Grid;
+use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\Email;
+use MoonShine\UI\Fields\Password;
+use MoonShine\UI\Fields\PasswordRepeat;
 use MoonShine\UI\Fields\Text;
 use Throwable;
 
@@ -52,6 +56,17 @@ class UserFormPage extends FormPage
                     Email::make('Email', 'email')
                         ->required(),
                 ])->columnSpan(6),
+                Column::make([
+                    Password::make('password')
+                    ->customAttributes(['autocomplete' => 'new-password'])
+                    ->eye(),
+                ])->columnSpan(6),
+                Column::make([
+                    PasswordRepeat::make('password_confirmation')
+                    ->customAttributes(['autocomplete' => 'confirm-password'])
+                    ->eye(),
+                ])->columnSpan(6),
+                
             ]),
         ];
     }
