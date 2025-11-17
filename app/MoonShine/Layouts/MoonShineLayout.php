@@ -9,6 +9,11 @@ use MoonShine\ColorManager\Palettes\PurplePalette;
 use MoonShine\ColorManager\ColorManager;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
 use MoonShine\Contracts\ColorManager\PaletteContract;
+use App\MoonShine\Resources\Category\CategoryResource;
+use MoonShine\MenuManager\MenuItem;
+use App\MoonShine\Resources\Product\ProductResource;
+use App\MoonShine\Resources\Order\OrderResource;
+use App\MoonShine\Resources\User\UserResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -28,6 +33,10 @@ final class MoonShineLayout extends AppLayout
     {
         return [
             ...parent::menu(),
+            MenuItem::make(CategoryResource::class, 'Categories'),
+            MenuItem::make(ProductResource::class, 'Products'),
+            MenuItem::make(OrderResource::class, 'Orders'),
+            MenuItem::make(UserResource::class, 'Users'),
         ];
     }
 
