@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Админ',
             'surname' => 'Системный',
             'patronymic' => 'Админович',
-            'login' => 'admin',
+            'login' => 'Admin',
             'email' => 'admin@copystar.ru',
             'password' => Hash::make('admin11'),
             'is_admin' => true,

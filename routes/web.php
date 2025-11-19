@@ -19,20 +19,9 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
-
-Route::get('/moonshine-direct', function () {
-    $moonshineUser = \MoonShine\Laravel\Models\MoonshineUser::where('email', 'admin@copystar.ru')->first();
-    
-    if ($moonshineUser) {
-        auth('moonshine')->login($moonshineUser);
-        return redirect('/moonshine');
-    }
-    
-    abort(403, 'Пользователь MoonShine не найден');
-})->name('moonshine.direct')->middleware('auth');
+Route::get('/admin', [MoonShineAuthController::class, 'redirectToMoonShine'])
+    ->name('moonshine')
+    ->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

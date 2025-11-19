@@ -39,6 +39,7 @@ final class MoonShineLayout extends AppLayout
             MenuItem::make(UserResource::class, 'Users'),
         ];
     }
+    
 
     /**
      * @param ColorManager $colorManager

@@ -30,7 +30,9 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $user = User::create([
@@ -60,14 +62,18 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         if (Auth::attempt(['login' => $request->login, 'password' => $request->password])) {
             return to_route('about');
         }
 
-        return response()->json(['errors' => ['login' => 'Неверный логин или пароль']], 400);
+        return redirect()->back()
+            ->withErrors(['login' => 'Неверный логин или пароль'])
+            ->withInput($request->except('password'));
     }
 
     public function logout()
@@ -77,21 +83,21 @@ class AuthController extends Controller
     }
 
     public function autoLogin()
-{
-    if (!Auth::check() || !Auth::user()->is_admin) {
-        dd('Не авторизован или не админ');
-    }
+    {
+        if (!Auth::check() || !Auth::user()->is_admin) {
+            dd('Не авторизован или не админ');
+        }
 
-    $moonshineUser = MoonshineUser::where('email', Auth::user()->email)->first();
-    
-    if (!$moonshineUser) {
-        dd('MoonShine пользователь не найден. Email: ' . Auth::user()->email);
-    }
+        $moonshineUser = MoonshineUser::where('email', Auth::user()->email)->first();
+        
+        if (!$moonshineUser) {
+            dd('MoonShine пользователь не найден. Email: ' . Auth::user()->email);
+        }
 
-    auth('moonshine')->login($moonshineUser);
-    
-    dd('Успешная авторизация', auth('moonshine')->check());
-    
-    return redirect('/moonshine');
-}
+        auth('moonshine')->login($moonshineUser);
+        
+        dd('Успешная авторизация', auth('moonshine')->check());
+        
+        return redirect('/moonshine');
+    }
 }

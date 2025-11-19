@@ -9,6 +9,16 @@
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
+                    @if ($errors->any())
+                        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label for="surname" class="block text-gray-700 mb-2">Фамилия *</label>

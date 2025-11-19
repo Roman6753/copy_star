@@ -9,6 +9,16 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
+                    @if ($errors->any())
+                        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="mb-4">
                         <label for="login" class="block text-gray-700 mb-2">Логин</label>
                         <input type="text" id="login" name="login" value="{{ old('login') }}" 
